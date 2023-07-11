@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -name '.*' -type d -not -path '*/.*/*..*' -print
+find . ../ -name '.*' -type d -not -path '*/.*../*' -print
