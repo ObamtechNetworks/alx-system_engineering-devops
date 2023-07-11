@@ -1,2 +1,3 @@
 #!/bin/bash
-find . ../ -type d -empty -printf '%P\n' -o -type f -empty -printf '%P\n' | cut -f2,3 -d '/'
+find . -type d -empty -printf '%P\n' -o -type f -empty -printf '%P\n' -o -name "."  | cut -f2,3 -d '/'
+
