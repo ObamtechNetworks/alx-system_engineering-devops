@@ -1,2 +1,2 @@
 #!/bin/bash
-find . ../ -name '.*' -type d -not -path '*/.*../*' | wc -l
+find . ../ -path \('*.'\) -prune -o  -type d | wc -l
