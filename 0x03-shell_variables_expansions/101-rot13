@@ -1,17 +1,2 @@
 #!/bin/bash
-
-encode_rot13() {
-    echo "$1" | tr 'A-Za-z' 'N-ZA-Mn-za-m'
-}
-
-decode_rot13() {
-    echo "$1" | tr 'A-Za-z' 'N-ZA-Mn-za-m'
-}
-
-if [ "$1" = "encode" ]; then
-    encode_rot13 "$2"
-elif [ "$1" = "decode" ]; then
-    decode_rot13 "$2"
-else
-    echo "Usage: $0 [encode|decode] text"
-fi
+tr 'A-Za-z' 'N-ZA-Mn-za-m'
