@@ -1,0 +1,21 @@
+total 76
+-rwxrw-r-- 1 vagrant vagrant  28 Jul 12 00:04 0-alias
+-rwxrw-r-- 1 vagrant vagrant  31 Jul 12 00:15 1-hello_you
+-rwxrw-r-- 1 vagrant vagrant  35 Jul 12 01:09 10-love_exponent_breath
+-rwxrw-r-- 1 vagrant vagrant  45 Jul 12 02:43 100-decimal_to_hexadecimal
+-rwxrw-r-- 1 vagrant vagrant  39 Jul 12 03:18 101-rot13
+-rw-rw-r-- 1 vagrant vagrant 109 Jul 12 03:24 102-odd
+-rwxrw-r-- 1 vagrant vagrant  34 Jul 12 01:46 11-binary_to_decimal
+-rwxrw-r-- 1 vagrant vagrant  60 Jul 12 02:29 12-combinations
+-rwxrw-r-- 1 vagrant vagrant  37 Jul 12 02:37 13-print_float
+-rwxrw-r-- 1 vagrant vagrant  38 Jul 12 00:20 2-path
+-rwxrw-r-- 1 vagrant vagrant  42 Jul 12 00:32 3-paths
+-rwxrw-r-- 1 vagrant vagrant  21 Jul 12 00:33 4-global_variables
+-rwxrw-r-- 1 vagrant vagrant  16 Jul 12 00:36 5-local_variables
+-rwxrw-r-- 1 vagrant vagrant  26 Jul 12 00:41 6-create_local_variable
+-rwxrw-r-- 1 vagrant vagrant  33 Jul 12 00:50 7-create_global_variable
+-rwxrw-r-- 1 vagrant vagrant  43 Jul 12 00:53 8-true_knowledge
+-rwxrw-r-- 1 vagrant vagrant  35 Jul 12 01:06 9-divide_and_rule
+-rw-rw-r-- 1 vagrant vagrant  57 Jul 11 23:57 README.md
+-rw-rw-r-- 1 vagrant vagrant   0 Jul 12 03:26 list
+-rw-rw-r-- 1 vagrant vagrant  69 Jul 12 03:17 quote
