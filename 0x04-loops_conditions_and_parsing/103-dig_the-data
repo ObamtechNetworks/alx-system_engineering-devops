@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# this script parses an apache log file in the format:
+# IP HTTP_CODE
+# in a list format
+# awk is the command instructed to be used
+
+awk '{ip_code[$1, $9]++} END {for (key in ip_code) {split(key, values, SUBSEP); printf "%6s %s %s\n",  ip_code[key], values[1], values[2]}}' apache-access.log | sort -nr
