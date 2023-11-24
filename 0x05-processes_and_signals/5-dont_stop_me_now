@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Script that kills/terminated a specified running process
 # get the PID of the specified process
-PID=$(pgrep -f "4-to_infinity_and_beyond")
+process=$(pgrep -f "4-to_infinity_and_beyond")
 # kill the process
-kill $PID
+kill "$process"
