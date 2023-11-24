@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Bash script that displays content of the current direcotry
+
+LIST="$(ls ./)"
+
+for i in $LIST;
+do
+	echo "$i"
+done
