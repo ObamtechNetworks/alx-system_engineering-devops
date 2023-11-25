@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Process and PID file
 pid_file="/var/run/myscript.pid"
+
+# check if /var/urn directory exists, create if not
+if [ ! -d "/var/run" ]; then
+	mkdir -p "/var/run"
+fi
+
 # Display PID and redirect output to the pid file
 echo $$ > "$pid_file"
 
@@ -19,8 +25,8 @@ sigint_handler()
 # handle SIGQuit
 sigquit_handler()
 {
-	rm "$pid_file"
-	exit
+	rm -f "$pid_file"
+	exit 0
 }
 
 # Trap signals by calling functions
@@ -33,5 +39,5 @@ while true;
 do
 	# Display this message indefinitely
 	echo "To infinity and beyond"
-	sleep 1
+	sleep 2
 done
