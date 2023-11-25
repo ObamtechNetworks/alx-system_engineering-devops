@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Process and PID file
+pid_file="/var/run/myscript.pid"
+# Display PID and redirect output to the pid file
+echo $$ > "$pid_file"
+
+# create functions for signals
+sigterm_handler()
+{
+	echo "I hate the kill command"
+}
+
+# handle sigint
+sigint_handler()
+{
+	echo "Y U no love me?!"
+}
+
+# handle SIGQuit
+sigquit_handler()
+{
+	rm "$pid_file"
+	exit
+}
+
+# Trap signals by calling functions
+trap sigterm_handler SIGTERM
+trap sigint_handler SIGINT
+trap sigquit_handler SIGQUIT SIGTERM
+
+# Keep loop running indefinitely
+while true;
+do
+	# Display this message indefinitely
+	echo "To infinity and beyond"
+	sleep 1
+done
