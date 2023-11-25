@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Script that kills/terminated a specified running process
+# Terminates a process that is trapped by SIGTERM
+process=$(pgrep -f "7-highlander")
+kill -9 "$process"
