@@ -14,6 +14,8 @@ echo $$ > "$pid_file"
 sigterm_handler()
 {
 	echo "I hate the kill command"
+	rm -f "$pid_file"
+	exit 0
 }
 
 # handle sigint
@@ -32,7 +34,7 @@ sigquit_handler()
 # Trap signals by calling functions
 trap sigterm_handler SIGTERM
 trap sigint_handler SIGINT
-trap sigquit_handler SIGQUIT SIGTERM
+trap sigquit_handler SIGQUIT
 
 # Keep loop running indefinitely
 while true;
