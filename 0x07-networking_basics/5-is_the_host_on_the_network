@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# A bash script that pings an IP address passed as an argument
+
+# check the number of arguments passed
+if [ $# -eq 0 ]; then
+	echo "Usage: $0 {IP_ADDRESS}"
+	exit 1
+fi
+# set positional arugment 1 as hostname
+hostname=$1
+
+# ping the hostname
+ping -c 5 "$hostname"
