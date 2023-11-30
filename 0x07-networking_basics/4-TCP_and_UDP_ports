@@ -4,4 +4,4 @@
 # It only shows listneing sockets
 # Also the PID and name of the program to which each socket belongs
 
-netstat -l -p
+netstat -lpv 
