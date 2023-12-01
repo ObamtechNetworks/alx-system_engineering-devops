@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# A bash script that listens to a port on localhost
+
+# continue listening to the port number
+while true;
+do
+	nc -l -p 98
+done
