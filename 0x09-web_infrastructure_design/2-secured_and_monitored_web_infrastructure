@@ -1,0 +1,36 @@
+https://imgur.com/vD7HHC6
+
+Specifics about the Infrastructure:
+
+Firewalls:
+
+Purpose: Firewalls are added to control and secure network traffic. They act as a barrier between the servers and the external network, filtering and monitoring incoming and outgoing traffic based on predetermined security rules.
+Why: Firewalls enhance the overall security posture of the infrastructure by preventing unauthorized access, protecting against various cyber threats, and ensuring that only legitimate traffic reaches the servers.
+SSL Certificate for HTTPS:
+
+Purpose: The SSL certificate is added to enable HTTPS, encrypting data in transit between the users and the website. This ensures a secure communication channel, preventing eavesdropping and man-in-the-middle attacks.
+Why: HTTPS is crucial for safeguarding sensitive user data, such as login credentials and personal information. It enhances the overall security of the website and builds trust among users.
+Monitoring Clients (Sumologic or other monitoring services):
+
+Purpose: Monitoring tools are added to track the health, performance, and potential issues within the infrastructure. Monitoring clients, such as Sumologic, collect and analyze log data, providing insights into system behavior.
+Why: Monitoring is essential for proactive issue resolution, identifying bottlenecks, and ensuring optimal performance. It helps in detecting anomalies, predicting potential failures, and maintaining the reliability of the infrastructure.
+Monitoring Data Collection:
+
+Monitoring tools collect data through monitoring agents deployed on each server. These agents continuously gather information on resource usage, system logs, and other performance metrics. The data is then transmitted to the monitoring server or service for analysis and visualization.
+Monitoring Web Server QPS:
+
+To monitor the web server's QPS (Queries Per Second), configure the monitoring tool to collect and analyze relevant metrics, such as the number of incoming requests per second. Set up alerts to notify administrators when QPS thresholds are exceeded, enabling timely intervention and preventing performance degradation.
+Issues with the Infrastructure:
+
+Terminating SSL at the Load Balancer Level:
+
+Issue: Terminating SSL at the load balancer means that the communication between the load balancer and the backend servers is unencrypted. This poses a security risk, as the data can be vulnerable to interception or tampering within the internal network.
+Solution: Implement end-to-end encryption by extending SSL termination to the backend servers, ensuring secure communication throughout the entire infrastructure.
+Single MySQL Server for Writes:
+
+Issue: Having only one MySQL server capable of accepting writes introduces a single point of failure for write operations. If this server fails, write operations cannot proceed, leading to potential downtime and data inconsistency.
+Solution: Implement MySQL replication with a master-slave configuration to distribute write operations among multiple servers, ensuring fault tolerance and high availability.
+Uniform Servers (Database, Web Server, Application Server):
+
+Issue: Having servers with identical components increases the risk of a systemic failure. If a specific component fails across all servers simultaneously (e.g., a critical software vulnerability), the entire infrastructure may be compromised.
+Solution: Introduce diversity in components and consider staggered software updates to minimize the risk of simultaneous failures across all servers. Implement redundancy where possible to enhance fault tolerance.
