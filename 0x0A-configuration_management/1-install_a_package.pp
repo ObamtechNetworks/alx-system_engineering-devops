@@ -8,7 +8,7 @@ $version = '2.1.0'
 
 # install werkzeug
 $werkzeug_package = 'werkzeug'
-$werkzeug_version = '2.1.0'
+$werkzeug_version = '2.1.1'
 
 # install flask with the specified version
 package { $package_name:
