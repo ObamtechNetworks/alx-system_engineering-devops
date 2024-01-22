@@ -1,0 +1,11 @@
+# create connection
+ssh-copy-id -i ~/.ssh/school ubuntu@54.237.76.176
+
+# set client configuration
+Host test_connection
+    HostName 54.237.76.176
+	Port 444
+	User ubuntu
+	IdentityFile ~/.ssh/school
+	PasswordAuthentication no
+
