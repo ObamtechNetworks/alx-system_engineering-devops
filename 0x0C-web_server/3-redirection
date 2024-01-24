@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
 # script to redirect Nginx link
 
-# Create a configuration file for the redirection
+# Create a server block
 echo "server {
     listen 80;
+    listen [::]:80;
+
     server_name localhost;
 
     location = /redirect_me {
         return 301 \$scheme://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
-}" | sudo tee /etc/nginx/sites-available/redirect_me.conf > /dev/null
 
-# Enable the configuration
-sudo ln -s /etc/nginx/sites-available/redirect_me.conf /etc/nginx/sites-enabled/
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}" | sudo tee /etc/nginx/sites-available/default
 
-# Test the configuration and restart Nginx
-sudo nginx -t && sudo systemctl restart nginx
+# Enable the server block
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Restart Nginx
+sudo /etc/init.d/nginx restart
