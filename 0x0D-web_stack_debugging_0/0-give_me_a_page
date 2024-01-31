@@ -1,4 +1,7 @@
-docker exec -it d964377d0e42 /bin/bash
+#!/usr/bin/env bash
+# automating apache configuration
+
+sudo docker exec -it d964377d0e42 /bin/bash
 service apache2 status
 service apache2 restart
 exit
