@@ -38,10 +38,10 @@ backend http_back
 sudo systemctl enable haproxy
 
 # Step 4: Ensure servers are configured with the right hostnames
-sudo hostnamectl set-hostname [STUDENT_ID]-web-01
+sudo hostnamectl set-hostname 221986-web-01
 echo "127.0.0.1 221986-web-01" | sudo tee -a /etc/hosts
 
-sudo hostnamectl set-hostname [STUDENT_ID]-web-02
+sudo hostnamectl set-hostname 221986-web-02
 echo "127.0.0.1 221986-web-02" | sudo tee -a /etc/hosts
 
 # Step 5: Restart HAProxy and the servers for changes to take effect
