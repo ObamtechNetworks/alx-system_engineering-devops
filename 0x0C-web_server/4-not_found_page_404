@@ -21,7 +21,7 @@ echo "server {
     server_name _;
 
     location / {
-        try_files \$uri \$uri/ /404.html; # Point to the custom 404 page
+        try_files \$uri \$uri/ =404; # Point to the custom 404 page
     }
 
     location = /redirect_me/ {
@@ -32,6 +32,7 @@ echo "server {
         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
 
+    error_page 404 /404.html;
     location = /404.html {
         root /var/www/html;
         internal;
