@@ -26,8 +26,8 @@ if [ "$#" -eq 1 ]; then
 elif [ "$#" -eq 2 ]; then
     # Display information for the specified subdomain
     display_info "$2" "$1"
-else
+# else
     # Display usage information if incorrect number of parameters
-    echo "Usage: $0 domain [subdomain]"
-    exit 1
+    # echo "Usage: $0 domain [subdomain]"
+    # exit 1
 fi
