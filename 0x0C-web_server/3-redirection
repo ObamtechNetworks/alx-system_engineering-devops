@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
-# script to redirect Nginx link
+# script to configure a brand new nginx machine and also write a redirect Nginx link
 
 # Update repositories
-sudo apt-get update
+sudo apt-get -y update
+
+# upgrade repo
+sudo apt-get -y upgrade
 
 # Install Nginx
 sudo apt-get -y install nginx
 
 # Start service
-sudo systemctl start nginx
+sudo service nginx start
 
-# Set permissions
+# Set permissions (do i need to do this? isn't it done automatically)
 mkdir -p /var/www/html
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
@@ -39,4 +42,4 @@ echo "server {
 sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 # Restart Nginx
-sudo /etc/init.d/nginx restart
+sudo service nginx restart
