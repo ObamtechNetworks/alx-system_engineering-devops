@@ -3,43 +3,35 @@
 
 # Update repositories
 sudo apt-get -y update
-
-# upgrade repo
-sudo apt-get -y upgrade
-
 # Install Nginx
 sudo apt-get -y install nginx
-
-# Start service
-sudo service nginx start
-
-# Set permissions (do i need to do this? isn't it done automatically)
-mkdir -p /var/www/html
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
-
-echo 'Hello World!' | sudo tee /var/www/html/index.html
 
 # Create a server block
 echo "server {
     listen 80;
     listen [::]:80;
 
-	root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
+    root /var/www/html;
+    index index.html index.htm;
+
     server_name _;
-    
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+	
 	location = /redirect_me {
         return 301 \$scheme://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
-    
-	location / {
-        try_files \$uri \$uri/ =404;
-    }
-}" | sudo tee /etc/nginx/sites-available/default
+
+}" | sudo tee /etc/nginx/sites-available/my_web_server
 
 # Enable the server block
-sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/my_web_server /etc/nginx/sites-enabled/
+
+# Create a test HTML file
+echo "Hello World!" | sudo tee /var/www/html/index.html
+echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
 
 # Restart Nginx
 sudo service nginx restart
