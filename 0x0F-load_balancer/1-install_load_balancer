@@ -24,13 +24,6 @@ backend http_back
 # Step 3: Enable HAProxy to be managed via an init script
 sudo systemctl enable haproxy
 
-# Step 4: Ensure servers are configured with the right hostnames
-sudo hostnamectl set-hostname 221986-web-01
-echo "127.0.0.1 221986-web-01" | sudo tee -a /etc/hosts
-
-sudo hostnamectl set-hostname 221986-web-02
-echo "127.0.0.1 221986-web-02" | sudo tee -a /etc/hosts
-
 # Step 5: Restart HAProxy and the servers for changes to take effect
 sudo systemctl restart haproxy
 sudo systemctl restart systemd-hostnamed
