@@ -6,7 +6,21 @@ sudo apt -y update
 sudo apt -y upgrade
 sudo apt -y install haproxy
 
+# customize default configuration
 echo "
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    daemon
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
 
 frontend http_front
     bind *:80
@@ -19,4 +33,17 @@ backend http_back
     server 221986-web-01 54.237.76.176:80 check
     server 221986-web-02 52.201.222.21:80 check
 " | sudo tee /etc/haproxy/haproxy.cfg
-sudo service haproxy restart
+
+# Step 3: Enable HAProxy to be managed via an init script
+sudo systemctl enable haproxy
+
+# Step 4: Ensure servers are configured with the right hostnames
+sudo hostnamectl set-hostname [STUDENT_ID]-web-01
+echo "127.0.0.1 221986-web-01" | sudo tee -a /etc/hosts
+
+sudo hostnamectl set-hostname [STUDENT_ID]-web-02
+echo "127.0.0.1 221986-web-02" | sudo tee -a /etc/hosts
+
+# Step 5: Restart HAProxy and the servers for changes to take effect
+sudo systemctl restart haproxy
+sudo systemctl restart systemd-hostnamed
