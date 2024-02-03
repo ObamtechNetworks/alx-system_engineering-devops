@@ -9,8 +9,6 @@ sudo apt-get -y install nginx
 # Create a test HTML file
 echo "Hello World!" | sudo tee /var/www/html/index.html
 echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
-# custom 404 page
-echo -e "Ceci n'est pas une page\n" | sudo tee /var/www/html/404.html
 
 # Create a server block
 echo "server {
@@ -43,5 +41,8 @@ echo "server {
 
 # Enable the server block
 sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
 sudo service nginx restart
