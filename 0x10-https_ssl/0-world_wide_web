@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# a bash script  that will display information about subdomains
+# Define a function to display information for a specific subdomain
+display_info() {
+    subdomain="$1"
+    domain="$2"
+
+    # Use dig and grep to fetch DNS information
+    result=$(dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:')
+
+    # Extract record type and destination using awk
+    record_type=$(echo "$result" | awk '/IN\s/{print $4}')
+    destination=$(echo "$result" | awk '/IN\s/{print $5}')
+
+    # Display the formatted output
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# Check if both domain and subdomain parameters are provided
+if [ "$#" -eq 1 ]; then
+    # Display information for www, lb-01, web-01, and web-02 subdomains
+    display_info "www" "$1"
+    display_info "lb-01" "$1"
+    display_info "web-01" "$1"
+    display_info "web-02" "$1"
+elif [ "$#" -eq 2 ]; then
+    # Display information for the specified subdomain
+    display_info "$2" "$1"
+else
+    # Display usage information if incorrect number of parameters
+    echo "Usage: $0 domain [subdomain]"
+    exit 1
+fi
