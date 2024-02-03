@@ -3,7 +3,6 @@
 
 # install packages
 sudo apt -y update
-sudo apt -y upgrade
 sudo apt -y install haproxy
 
 # customize default configuration
@@ -12,17 +11,17 @@ echo "
 frontend http_front
     bind *:80
     mode http
-    default_backend http_back
+    default_backend obams_backend
 
-backend http_back
+backend obams_backend
     mode http
     balance roundrobin
     server 221986-web-01 54.237.76.176:80 check
     server 221986-web-02 52.201.222.21:80 check
 " | sudo tee /etc/haproxy/haproxy.cfg
 
-# Step 3: Enable HAProxy to be managed via an init script
-sudo systemctl enable haproxy
+# enable haproxy to be started by init script
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 
 # Step 5: Restart HAProxy
 sudo systemctl restart haproxy
