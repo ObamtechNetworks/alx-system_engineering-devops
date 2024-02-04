@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
-# this script sets up and configures HAproxy on your lb-01 server
+# Update the package list
+sudo apt update -y
 
-# install packages
-sudo apt -y update
-sudo apt -y install haproxy
+# Install HAproxy if not installed
+sudo apt install -y haproxy
 
-# customize default configuration
-echo "
+# Backup the existing configuration
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
 
-frontend http_front
+# Allow traffic on port 80 in the firewall (ufw)
+sudo ufw allow 80
+
+# Append the necessary configuration to HAproxy
+sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOF
+frontend obams_frontend
     bind *:80
     mode http
     default_backend obams_backend
@@ -16,12 +21,9 @@ frontend http_front
 backend obams_backend
     mode http
     balance roundrobin
-    server 221986-web-01 54.237.76.176:80 check
-    server 221986-web-02 52.201.222.21:80 check
-" | sudo tee /etc/haproxy/haproxy.cfg
+    server web-01 54.237.76.176:80 check
+    server web-02 52.201.222.21:80 check
+EOF
 
-# enable haproxy to be started by init script
-echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
-
-# Step 5: Restart HAProxy
+# Make sure HAproxy can be managed via an init script
 sudo systemctl restart haproxy
