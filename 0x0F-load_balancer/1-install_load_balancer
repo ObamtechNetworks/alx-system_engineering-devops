@@ -21,8 +21,8 @@ frontend obams_frontend
 backend obams_backend
     mode http
     balance roundrobin
-    server web-01 54.237.76.176:80 check
-    server web-02 52.201.222.21:80 check
+    server 221986-web-01 54.237.76.176:80 check
+    server 221986-web-02 52.201.222.21:80 check
 EOF
 
 # Make sure HAproxy can be managed via an init script
