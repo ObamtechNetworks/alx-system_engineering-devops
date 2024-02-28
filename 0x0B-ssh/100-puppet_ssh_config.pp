@@ -1,10 +1,15 @@
-# using puppet to run ssh client configuration
+# ssh_config.pp
 
-$private_key = '~/.ssh/school'
-$passkey_auth = 'no'
-
-# execute command
+# Ensure SSH client configuration
 file { '/home/ubuntu/.ssh/config':
-  ensure => 'file',
-  content => "Host mypupet_config\n\tHostName 54.237.76.176\n\tUser ubuntu\n\tIdentityFile ${private_key}\n\tPasswordAuthentication ${passkey_auth}\n"
+  ensure => present,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
+  mode   => '0600',
+  content => '
+    Host ubuntu
+      HostName 3.85.41.84
+      IdentityFile ~/.ssh/school
+      PasswordAuthentication no
+  ',
 }
