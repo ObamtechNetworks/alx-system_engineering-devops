@@ -4,6 +4,7 @@
 $user_home = $facts['os']['family'] ? {
   'windows' => $facts['env']['USERPROFILE'],
   default   => $facts['env']['HOME'],
+  undef     => '/default/path',  # Provide a default path in case facts are not available
 }
 
 # Define variables for the private key path and passphrase authentication
