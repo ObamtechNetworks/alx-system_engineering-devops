@@ -1,5 +1,5 @@
 # create connection
-ssh-copy-id -i ~/.ssh/school ubuntu@54.237.76.176
+# ssh-copy-id -i ~/.ssh/school ubuntu@54.237.76.176
 
 # set client configuration
 Host test_connection
