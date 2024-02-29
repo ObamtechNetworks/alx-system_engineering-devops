@@ -6,8 +6,8 @@ sudo apt-get -y install nginx
 
 # Create a server block
 echo "server {
-    listen 80;
-    listen [::]:80;
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
     root /var/www/html;
     index index.html index.htm;
@@ -17,10 +17,10 @@ echo "server {
     location / {
         try_files \$uri \$uri/ =404;
     }
-}" | sudo tee /etc/nginx/sites-available/my_web_server
+}" | sudo tee /etc/nginx/sites-available/default
 
 # Enable the server block
-sudo ln -sf /etc/nginx/sites-available/my_web_server /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 # Create a test HTML file
 echo "Hello World!" | sudo tee /var/www/html/index.html
