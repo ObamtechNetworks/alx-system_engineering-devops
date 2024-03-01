@@ -12,7 +12,7 @@ echo "server {
     root /var/www/html;
     index index.html index.htm;
 
-    server_name _;
+    server_name obam.tech www.obam.tech;
 
     location / {
         try_files \$uri \$uri/ =404;
