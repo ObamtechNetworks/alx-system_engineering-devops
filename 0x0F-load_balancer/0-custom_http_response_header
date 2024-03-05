@@ -6,6 +6,7 @@ sudo apt-get install -y nginx
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
 echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+
 # custom 404 page
 echo -e "Ceci n'est pas une page\n" | sudo tee /var/www/html/404.html
 
@@ -17,8 +18,9 @@ echo "server {
     root /var/www/html;
     index index.html index.htm;
 
+    server_name obam.tech www.obam.tech;
+
     add_header X-Served-By $HOSTNAME;
-    server_name _;
 
     location / {
         try_files \$uri \$uri/ =404; # Point to the custom 404 page
@@ -33,15 +35,9 @@ echo "server {
     }
 
     error_page 404 /404.html;
-    location = /404.html {
-        root /var/www/html;
-        internal;
-    }
-
 }" | sudo tee /etc/nginx/sites-available/default
 
 # Enable the server block
 sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
-# restart nginx
 sudo service nginx restart
