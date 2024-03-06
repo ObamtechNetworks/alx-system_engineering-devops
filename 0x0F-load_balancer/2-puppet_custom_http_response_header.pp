@@ -1,25 +1,50 @@
-# Installs Nginx and adds a custom HTTP header
+# puppet code to configure nginx response header
+# install nginx
 
-exec {'update':
-  provider => shell,
-  command  => 'sudo apt-get -y update',
-  before   => Exec['install Nginx'],
+package {'nginx':
+  ensure => installed,
 }
 
-exec {'install Nginx':
-  provider => shell,
-  command  => 'sudo apt-get -y install nginx',
-  before   => Exec['add_header'],
+# customize content of the index.html
+file { '/var/www/html/index.html':
+  ensure => file,
+  content => 'Hello World!',
+  require => Package['nginx'],
 }
 
-exec { 'add_header':
-  provider    => shell,
-  environment => ["HOST=${hostname}"],
-  command     => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n\tadd_header X-Served-By \"$HOST\";/" /etc/nginx/nginx.conf',
-  before      => Exec['restart Nginx'],
+# Configure Nginx server block
+file { '/etc/nginx/sites-available/default':
+  ensure  => file,
+  content => '
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+
+  root /var/www/html;
+  index index.html index.htm;
+
+  server_name obam.tech www.obam.tech;
+  add_header X-Served-By $HOSTNAME;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  location = /redirect_me/ {
+    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+  }
+
+  location = /redirect_me {
+    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+  }
+
+  error_page 404 /404.html;
+}',
+  require => Package['nginx'],
 }
 
-exec { 'restart Nginx':
-  provider => shell,
-  command  => 'sudo service nginx restart',
+# Ensure Nginx service is running
+service { 'nginx':
+  ensure => running,
+  enable => true,
 }
