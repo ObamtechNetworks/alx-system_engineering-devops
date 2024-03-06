@@ -1,29 +1,21 @@
 #!/usr/bin/env bash
-# Update the package list
+# This script configures a load balancer on a server
+
+# update package
 sudo apt update -y
+# install the haproxy
+sudo apt install haproxy -y
 
-# Install HAproxy if not installed
-sudo apt install -y haproxy
-
-# Backup the existing configuration
-sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
-
-# Allow traffic on port 80 in the firewall (ufw)
-sudo ufw allow 80
-
-# Append the necessary configuration to HAproxy
-sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOF
+# configure frontedna nd backend
+echo "
 frontend obams_frontend
     bind *:80
-    mode http
     default_backend obams_backend
 
 backend obams_backend
-    mode http
     balance roundrobin
-    server 221986-web-01 54.237.76.176:80 check
-    server 221986-web-02 52.201.222.21:80 check
-EOF
+    server 221986-web-01 3.85.41.84:80 check
+    server 221986-web-02 54.90.17.105:80 check
+" | sudo tee -a /etc/haproxy/haproxy.cfg
 
-# Make sure HAproxy can be managed via an init script
-sudo systemctl restart haproxy
+sudo service haproxy restart
