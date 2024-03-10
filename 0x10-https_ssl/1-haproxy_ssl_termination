@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# configures ssl certifcate for load balancer
+sudo sed -i '/^    bind \*:80$/a\
+    bind *:443 ssl crt /etc/haproxy/certs/www.obam.tech.pem\
+    redirect scheme https code 301 if !{ ssl_fc }' /etc/haproxy/haproxy.cfg
+
+sudo service haproxy restart
+sudo haproxy -f /etc/haproxy/haproxy.cfg -c > /dev/null 2>&1
+sudo openssl dhparam -out /etc/haproxy/dhparams.pem 2048 > /dev/null 2>&1
+sudo sed -i '/^global/s/$/ ssl-dh-param-file \/etc\/haproxy\/dhparams.pem/' /etc/haproxy/haproxy.cfg
