@@ -2,4 +2,30 @@
 # this script installs and configure nginx to listen to port 80
 sudo apt get update -y
 sudo apt install nginx -y
-sudo service nginx restart
+sudo apt install -y net-tools
+
+# Nginx configuration
+nginx_config=$(cat <<EOL
+server {
+    listen 80 default_server;
+	listen [::]:80 default_server;
+
+	# Other server configuration...
+	}
+EOL
+)
+
+# Check if Nginx is running and listening on port 80
+if sudo netstat -tulpn | grep :80; then
+    echo "Nginx is already listening on port 80."
+else
+    # Echo Nginx configuration to default file
+    echo "$nginx_config" | sudo tee -a /etc/nginx/sites-available/default > /dev/null
+
+    # Restart Nginx
+    sudo service nginx restart
+
+    # Update firewall rules
+    sudo ufw allow 80
+    sudo ufw enable
+fi
