@@ -1,13 +1,11 @@
 sudo apt update
 sudo apt install
-sudo ufw default deny incoming  # Deny all incoming traffic by default
-sudo ufw default allow outgoing # Allow all outgoing traffic
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
 
-# Allow incoming traffic on specific ports
 sudo ufw allow 22/tcp   # Allow SSH
 sudo ufw allow 443/tcp  # Allow HTTPS
 sudo ufw allow 80/tcp   # Allow HTTP
 
-# Enable ufw
 sudo ufw enable
 sudo ufw status verbose
