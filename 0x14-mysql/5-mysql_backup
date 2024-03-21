@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# script that creates an sql dump
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <mysql_password>"
+    exit 1
+fi
+
+# MySQL dump file name
+MYSQL_DUMP_FILE="backup.sql"
+
+# Current date for the tar.gz archive name
+DATE=$(date +"%d-%m-%Y")
+
+# MySQL dump command
+mysqldump -uroot -p"$1" --all-databases > $MYSQL_DUMP_FILE
+
+# Check if the MySQL dump was successful
+if [ $? -eq 0 ]; then
+    echo "MySQL dump created successfully"
+
+    # Create a tar.gz archive with the MySQL dump
+    tar -czf "$DATE.tar.gz" $MYSQL_DUMP_FILE
+
+    # Check if the archive creation was successful
+    if [ $? -eq 0 ]; then
+        echo "Archive $DATE.tar.gz created successfully"
+    else
+        echo "Failed to create archive"
+    fi
+else
+    echo "Failed to create MySQL dump"
+fi
