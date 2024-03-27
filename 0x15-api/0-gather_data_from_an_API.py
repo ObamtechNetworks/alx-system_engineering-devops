@@ -52,7 +52,7 @@ def employee_todo_progress(employee_id):
     # display the progress
     print(
         f"Employee \
-{target_emp['name']} is done with tasks ({comp_tasks}/{total_tasks}):")
+{target_emp['name']} is done with tasks({comp_tasks}/{total_tasks}):")
 
     for task in employee_todos:
         if task['completed']:
