@@ -100,10 +100,11 @@ def write_to_csv(user_id, username, tasks):
     """
     filename = f"{user_id}.csv"
     with open(filename, mode="w", newline="") as csv_file:
-        writer = csv.writer(csv_file)
-        # writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+        writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         for task in tasks:
-            writer.writerow([user_id, username, task["completed"], task["title"]])
+            completed_status = "True" if task["completed"] else "False"
+            task_title = task["title"]
+            writer.writerow([user_id, username, completed_status, task_title])
 
 
 def main():
@@ -124,7 +125,7 @@ def main():
         users = get_users()
         if not users:
             return 1
-        
+
         target_employee = None
         for user in users:
             if user["id"] == employee_id:
@@ -138,6 +139,7 @@ def main():
         if not todos:
             return 1
         write_to_csv(employee_id, target_employee["username"], todos)
+
         '''
         completed_tasks, total_tasks = calc_emp_todo_progress(todos)
         completed_todo_titles = [
