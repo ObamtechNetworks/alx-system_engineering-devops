@@ -84,7 +84,7 @@ def display_progress(employee_name, completed_tasks, total_tasks, titles):
         titles (list): A list of titles of completed TODOs.
     """
     print(f"Employee {employee_name}"
-          f" is done with tasks({completed_tasks}/{total_tasks})")
+          f" is done with tasks({completed_tasks}/{total_tasks}):")
     for title in titles:
         print(f"\t{title}")
 
