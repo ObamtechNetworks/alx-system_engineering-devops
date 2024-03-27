@@ -86,7 +86,7 @@ def display_progress(employee_name, completed_tasks, total_tasks, titles):
     print(f"Employee {employee_name}"
           f" is done with tasks({completed_tasks}/{total_tasks}):")
     for title in titles:
-        print(f"\t{title}")
+        print(f"\t {title}")
 
 
 def main():
