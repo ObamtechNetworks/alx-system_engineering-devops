@@ -4,8 +4,8 @@ returns information bout his/her TODO list progress.
 """
 
 import csv
-import requests
 import json
+import requests
 import sys
 
 users_url = "https://jsonplaceholder.typicode.com/users"
