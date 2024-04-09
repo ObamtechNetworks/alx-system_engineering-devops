@@ -6,8 +6,10 @@ import requests
 
 def number_of_subscribers(subreddit):
     """ get number of subscriber for a subreddit """
+    if subreddit is None:
+        return 0
     # construct url and subreddit to call
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
 
     # define customer User-Agent to avoid errors due to many requests
     headers = {
