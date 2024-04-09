@@ -10,7 +10,8 @@ def number_of_subscribers(subreddit):
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
 
     # define customer User-Agent to avoid errors due to many requests
-    headers = {'User-Agent': 'Custom-User-Agent'}
+    headers = {
+            'User-Agent': '"MyRedditSubCounter/1.0 (by /u/obams)"'}
     # make an api call using request to get details about a subreddit
     response = requests.get(url, headers=headers, allow_redirects=False)
 
