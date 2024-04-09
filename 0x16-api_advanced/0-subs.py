@@ -12,7 +12,7 @@ def number_of_subscribers(subreddit):
     # define customer User-Agent to avoid errors due to many requests
     headers = {'User-Agent': 'Custom-User-Agent'}
     # make an api call using request to get details about a subreddit
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
     # check the staus of the call
     if response.status_code == 200:
