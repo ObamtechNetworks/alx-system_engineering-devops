@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Working with Advanced APIs """
-
 import requests
 
 

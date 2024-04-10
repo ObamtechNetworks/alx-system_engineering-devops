@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-""" Working with Advanced APIs """
-
+"""Working with Advanced APIs"""
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """ get number of subscriber for a subreddit """
+    """get number of subscriber for a subreddit"""
     if subreddit is None:
         return 0
     # construct url and subreddit to call
