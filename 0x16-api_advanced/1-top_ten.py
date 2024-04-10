@@ -33,5 +33,5 @@ def top_ten(subreddit):
         else:
             # return 0 for invalid subreddits or any other errors
             print(None)
-    except Exception as e:
+    except (Exception, JSONDecodeError) as e:
         print(None)
