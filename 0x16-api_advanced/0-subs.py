@@ -26,5 +26,4 @@ def number_of_subscribers(subreddit):
             # return 0 for invalid subreddits or any other errors
             return 0
     except Exception as e:
-        print('Error: {}'.format(e))
         return 0

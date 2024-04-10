@@ -6,7 +6,7 @@ import requests
 def top_ten(subreddit):
     """ get number of subscriber for a subreddit """
     if subreddit is None:
-        return None
+        print(None)
     # construct url and subreddit to call
     url = f"https://www.reddit.com/r/{subreddit}/top.json"
 
@@ -32,7 +32,6 @@ def top_ten(subreddit):
                 print(title)
         else:
             # return 0 for invalid subreddits or any other errors
-            return None
+            print(None)
     except Exception as e:
-        print('Error: {}'.format(e))
-        return None
+        print(None)
