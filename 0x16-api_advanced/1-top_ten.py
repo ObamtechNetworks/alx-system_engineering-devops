@@ -9,7 +9,7 @@ def top_ten(subreddit):
     if subreddit is None:
         return None
     # construct url and subreddit to call
-    url = f"https://www.reddit.com/r/{subreddit}/top.json"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
 
     # define customer User-Agent to avoid errors due to many requests
     headers = {
@@ -25,7 +25,7 @@ def top_ten(subreddit):
                 # print the top 10 posts
                 posts = data['data']['children']
                 titles = [post['data']['title'] for post in posts]
-            except json.JSONDecodeError as e:
+            except (Exception, json.JSONDecodeError) as e:
                 print(None)
                 return
             # extract top 10
@@ -37,6 +37,6 @@ def top_ten(subreddit):
         else:
             # return 0 for invalid subreddits or any other errors
             return None
-    except Exception as e:
+    except (Exception, json.JSONDecodeError) as e:
         # print('Error: {}'.format(e))
         return None
