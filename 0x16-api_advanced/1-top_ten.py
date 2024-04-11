@@ -32,10 +32,13 @@ def top_ten(subreddit):
                 print(title)
         else:
             print(None)
+            return
             # print(f"No posts found for subreddit '{subreddit}'")
     except requests.exceptions.RequestException as e:
         print(None)
+        return
         # print(f"Request failed: {e}")
     except json.JSONDecodeError as e:
         print(None)
+        return
         # print(f"Failed to parse JSON: {e}")
