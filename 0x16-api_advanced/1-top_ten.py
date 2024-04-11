@@ -1,44 +1,42 @@
 #!/usr/bin/python3
-""" This module decouples API in advanced way"""
+""" Working with Advanced APIs """
 
 import requests
-import json
 
 
 def top_ten(subreddit):
+    """ get number of subscriber for a subreddit """
     if subreddit is None:
-        print(None)
-        return
+        return None
+    # construct url and subreddit to call
+    url = f"https://www.reddit.com/r/{subreddit}/top.json"
 
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-
+    # define customer User-Agent to avoid errors due to many requests
     headers = {
-        'User-Agent': 'MyRedditSubCounter/1.0 (by /u/obams)'
-    }
-
+            'User-Agent': '"MyRedditSubCounter/1.0 (by /u/obams)"'}
+    # make an api call using request to get details about a subreddit
     try:
-        response = requests.get(url,
-                                headers=headers,
-                                allow_redirects=False)
-        response.raise_for_status()  # exception for 4xx / 5xx status codes
-        data = response.json()
-
-        if 'data' in data and 'children' in data['data']:
-            posts = data['data']['children']
-            titles = [post['data']['title'] for post in posts]
+        response = requests.get(url, headers=headers, allow_redirects=False)
+        # check the staus of the call
+        if response.status_code == 200:
+            # extract the subscribers count from the json file
+            try:
+                data = response.json()
+                # print the top 10 posts
+                posts = data['data']['children']
+                titles = [post['data']['title'] for post in posts]
+            except json.JSONDecodeError as e:
+                print(None)
+                return
+            # extract top 10
             top_10_titles = titles[:10]
 
+            # print the to_10
             for title in top_10_titles:
                 print(title)
         else:
-            print(None)
-            return
-            # print(f"No posts found for subreddit '{subreddit}'")
-    except requests.exceptions.RequestException as e:
-        print(None)
-        return
-        # print(f"Request failed: {e}")
-    except json.JSONDecodeError as e:
-        print(None)
-        return
-        # print(f"Failed to parse JSON: {e}")
+            # return 0 for invalid subreddits or any other errors
+            return None
+    except Exception as e:
+        # print('Error: {}'.format(e))
+        return None
