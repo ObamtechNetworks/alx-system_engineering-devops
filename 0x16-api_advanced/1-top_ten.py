@@ -19,7 +19,10 @@ def top_ten(subreddit):
         # check the staus of the call
         if response.status_code == 200:
             # extract the subscribers count from the json file
-            data = response.json()
+            try:
+                data = response.json()
+            except (Exception, JSONDecodeError) as e:
+                print(None)
             # print the top 10 posts
             posts = data['data']['children']
             titles = [post['data']['title'] for post in posts]
