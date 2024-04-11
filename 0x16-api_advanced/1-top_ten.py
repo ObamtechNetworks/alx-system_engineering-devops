@@ -10,7 +10,7 @@ def top_ten(subreddit):
         print(None)
         return
 
-    url = f"https://www.reddit.com/r/{subreddit}/top.json"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
 
     headers = {
         'User-Agent': 'MyRedditSubCounter/1.0 (by /u/obams)'
