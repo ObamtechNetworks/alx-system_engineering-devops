@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+""" This module decouples API in advanced way"""
+
 import requests
 import json
 
@@ -29,8 +31,11 @@ def top_ten(subreddit):
             for title in top_10_titles:
                 print(title)
         else:
-            print(f"No posts found for subreddit '{subreddit}'")
+            print(None)
+            # print(f"No posts found for subreddit '{subreddit}'")
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+        print(None)
+        # print(f"Request failed: {e}")
     except json.JSONDecodeError as e:
-        print(f"Failed to parse JSON: {e}")
+        print(None)
+        # print(f"Failed to parse JSON: {e}")
