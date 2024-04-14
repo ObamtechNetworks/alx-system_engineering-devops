@@ -1,6 +1,6 @@
-# Puppet manifest to ensure the occurrence of a 500 error is resolved and add specified requirements
+# Resolve 500 error
 
-file { '/var/www/html/wp-settings.php':
-  ensure  => file,
-  content => file('/var/www/html/wp-settings.php').content.replace('phpp', 'php')
+exec {'replace':
+  provider => shell,
+  command  => 'sed -i "s/phpp/php/g" /var/www/html/wp-settings.php'
 }
