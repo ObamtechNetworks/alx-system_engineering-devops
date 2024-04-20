@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
 # Bash script to gracefully start gunicorn
 
-# get the process IDs (PIDs) of the existing Gunicorn processes
-pids=$(pgrep gunicorn)
+# Function to find the Gunicorn master PID
+get_gunicorn_pid() {
+  # Use ps to find processes with "gunicorn" in the command
+  gunicorn_pids=$(ps auxf | grep gunicorn | awk '{print $2}')
 
-# Loop through each PID and gracefully restart each gunicorn process
-for pid in $pids; do
-    echo "Gracefully restarting Gunicorn process with PID: $pid"
-	kill -s TERM "$pid"  # send a SIGTERM signal to gracefully shutdown each gunicorn process
-done
+  # Check if any Gunicorn processes are found
+  if [[ -z "$gunicorn_pids" ]]; then
+    echo "Error: No Gunicorn processes found!"
+    exit 1
+  fi
 
-# Wait for the short period to allow existing requst to complete
-sleep 5
+  # Assuming the first PID is the master (common scenario)
+  Gunicorn_PID=${gunicorn_pids%% *}
+}
 
-# start gunicorn process
-# /usr/bin/gunicorn --bind 0.0.0.0:5003 --workers 3 /home/ubuntu/AirBnB_clone_v4/web_dynamic.2-hbnb:app
+# Call the function to get the PID
+get_gunicorn_pid
 
-if /usr/bin/gunicorn --bind 0.0.0.0:5003 --workers 3 /home/ubuntu/AirBnB_clone_v4/web_dynamic.2-hbnb:app; then
-    # message
-	echo "Gunicorn restarted successfully"
-else
-    echo "Something went wrong"
-fi
+# Send HUP signal for graceful reload
+echo "Sending HUP signal to Gunicorn master process (PID: $Gunicorn_PID) for graceful reload..."
+kill -HUP $Gunicorn_PID
+
+echo "Reload process initiated. New requests will be handled by workers with the updated code."
+
+# ps aux | pgrep gunicorn | grep -v grep | awk '{print $2}' | xargs kill -HUP
