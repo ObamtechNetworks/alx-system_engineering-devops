@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Bash script to gracefully start gunicorn
+
+# get the process IDs (PIDs) of the existing Gunicorn processes
+pids=$(pgrep gunicorn)
+
+# Loop through each PID and gracefully restart each gunicorn process
+for pid in $pids; do
+    echo "Gracefully restarting Gunicorn process with PID: $pid"
+	kill -s TERM $pid  # send a SIGTERM signal to gracefully shutdown each gunicorn process
+done
+
+# Wait for the short period to allow existing requst to complete
+sleep 5
+
+# start gunicorn process
+/usr/bin/gunicorn --bind 0.0.0.0:5003 --workers 3 /home/ubuntu/AirBnB_clone_v4/web_dynamic.2-hbnb:app
+
+if [ $? -eq 0]; then
+    # message
+	echo "Gunicorn restarted successfully"
+else
+    echo "Something went wrong"
+fi
