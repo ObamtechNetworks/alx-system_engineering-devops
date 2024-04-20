@@ -18,7 +18,9 @@ get_gunicorn_pid
 
 # Send HUP signal for graceful reload
 echo "Sending HUP signal to Gunicorn master process (PID: $Gunicorn_PID) for graceful reload..."
-kill -HUP "$Gunicorn_PID"
+for pid in $Gunicorn_PID; do
+    kill -HUP "$pid"
+done
 
 echo "Reload process initiated. New requests will be handled by workers with the updated code."
 
