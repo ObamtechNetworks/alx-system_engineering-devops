@@ -4,16 +4,13 @@
 # Function to find the Gunicorn master PID
 get_gunicorn_pid() {
   # Use ps to find processes with "gunicorn" in the command
-  gunicorn_pids=$(ps auxf | grep gunicorn | awk '{print $2}')
+  Gunicorn_PID=$(pgrep -f "gunicorn")
 
   # Check if any Gunicorn processes are found
-  if [[ -z "$gunicorn_pids" ]]; then
+  if [[ -z "$Gunicorn_PID" ]]; then
     echo "Error: No Gunicorn processes found!"
     exit 1
   fi
-
-  # Assuming the first PID is the master (common scenario)
-  Gunicorn_PID=${gunicorn_pids%% *}
 }
 
 # Call the function to get the PID
@@ -21,7 +18,7 @@ get_gunicorn_pid
 
 # Send HUP signal for graceful reload
 echo "Sending HUP signal to Gunicorn master process (PID: $Gunicorn_PID) for graceful reload..."
-kill -HUP $Gunicorn_PID
+kill -HUP "$Gunicorn_PID"
 
 echo "Reload process initiated. New requests will be handled by workers with the updated code."
 
