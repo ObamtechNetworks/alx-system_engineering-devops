@@ -1,27 +1,8 @@
 #!/usr/bin/env bash
 # Bash script to gracefully start gunicorn
 
-# Function to find the Gunicorn master PID
-get_gunicorn_pid() {
-  # Use ps to find processes with "gunicorn" in the command
-  Gunicorn_PID=$(pgrep -f "gunicorn")
+# Extract the main PID of the Gunicorn service
+MAIN_PID=$(systemctl status gunicorn | sed -n 's/.*Main PID: \(.*\)$/\1/g p' | cut -f1 -d' ')
 
-  # Check if any Gunicorn processes are found
-  if [[ -z "$Gunicorn_PID" ]]; then
-    echo "Error: No Gunicorn processes found!"
-    exit 1
-  fi
-}
-
-# Call the function to get the PID
-get_gunicorn_pid
-
-# Send HUP signal for graceful reload
-echo "Sending HUP signal to Gunicorn master process (PID: $Gunicorn_PID) for graceful reload..."
-for pid in $Gunicorn_PID; do
-    kill -HUP "$pid"
-done
-
-echo "Reload process initiated. New requests will be handled by workers with the updated code."
-
-# ps aux | pgrep gunicorn | grep -v grep | awk '{print $2}' | xargs kill -HUP
+# Send a HUP signal to the main PID to gracefully reload Gunicorn
+kill -HUP "$MAIN_PID"
